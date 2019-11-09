@@ -1,0 +1,79 @@
+swagger: '2.0'
+info:
+  title: link
+  description: link backend
+  version: 1.0.0
+basePath: /api/v1
+
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+
+paths:
+  /show_all:
+    get:
+      operationId: databases.links.show_all
+      summary: 'Вывести все записи'
+      responses:
+        200:
+          description: 'Сервис рабоатет в штатном режиме'
+          schema:
+            $ref: '#/definitions/SuccessResponse'
+        500:
+          description: 'Ошибка в работе сервиса'
+          schema:
+            $ref: '#/definitions/Error'
+  /healthcheck:
+    get:
+      operationId: databases.links.healthcheck
+      summary: 'Проверка работы сервера'
+      responses:
+        200:
+          description: 'Сервис работает в штатном режиме'
+          schema:
+            $ref: '#/definitions/SuccessResponse'
+        500:
+          description: 'Ошибка в работе сервиса'
+          schema:
+            $ref: '#/definitions/Error'
+  /add_service:
+    post:
+      operationId: databases.links.add_service
+      summary: 'Добавить новый сайт в каталог'
+      parameters:
+        - in: body
+          name: dates
+          required: true
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+              link:
+                type: string
+      responses:
+        200:
+          description: 'Сервис работает'
+          schema:
+            $ref: '#/definitions/SuccessResponse'
+        500:
+          description: 'Ошибка'
+          schema:
+            $ref: '#/definitions/Error'
+
+definitions:
+  Error:
+    type: object
+    properties:
+      result:
+        type: string
+        default: succes
+  SuccessResponse:
+    type: object
+    properties:
+      result:
+        type: string
+        default: succes

@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  back:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: backend
+    container_name: backend_started
+    command: python3 cli.py run_server
+    working_dir: /usr/backend
+    ports:
+      - 8000:8000
+    restart: on-failure
