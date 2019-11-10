@@ -17,6 +17,19 @@ paths:
     get:
       operationId: databases.links.show_all
       summary: 'Вывести все записи'
+      parameters:
+        - in: query
+          name: domen
+          required: false
+          type: string
+        - in: query
+          name: fl
+          required: false
+          type: string
+        - in: query
+          name: id
+          required: false
+          type: integer
       responses:
         200:
           description: 'Сервис рабоатет в штатном режиме'

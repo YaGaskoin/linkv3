@@ -11,8 +11,7 @@ def create_app():
     _app.app.config.from_object(Set)
     _app.add_api('swagger.yml')
     db.init_app(_app.app)
-    migrate.init_app(_app.app,db)
-
+    migrate.init_app(_app.app, db)
 
     return _app.app
 

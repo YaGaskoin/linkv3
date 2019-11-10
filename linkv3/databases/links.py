@@ -1,8 +1,6 @@
 from models import Link,db
 from connexion import problem
 from sqlalchemy.exc import SQLAlchemyError
-from aiohttp.web_request import Request
-from aiohttp.web_response import Response
 from flask import jsonify
 
 
@@ -22,14 +20,31 @@ def add_service(dates):
     return {'result' : 'success'}
 
 
-async def show_all(request: Request):
-    id = request.query.get('id')
-    resp = db.session.query(Link).all().filter(Link.id == id)
+def show_all(domen='', fl='', id=0):
+
+    resp = db.session.query(Link).all()
     serialized = {}
     for i in range(0, len(resp)):
-        serialized[str(resp[i].id)] = {"name": str(resp[i].name), "url": str(resp[i].url)}
-    print(jsonify(serialized))
-    return Response(text='All right!')
+        serialized[resp[i].id] = {"name": str(resp[i].name), "url": str(resp[i].url)}
+
+    if id > 0:
+        tmp = {}
+        tmp[id] = serialized.get(id)
+        serialized = tmp
+    if len(fl) != 0:
+        tmp = {}
+        for key, value in serialized.items():
+            if value['name'][0] == fl:
+                tmp[key] = value
+        serialized = tmp
+    if len(domen) != 0:
+        tmp = {}
+        for key, value in serialized.items():
+            if value['url'].split('.')[2] == domen:
+                tmp[key] = value
+        serialized = tmp
+
+    return serialized
 
 
 
